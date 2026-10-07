@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--/*
+  Fragmentos reutilizados por TODOS os temas.
+  Um tema novo pode usar estes fragmentos ou criar os seus próprios.
+*/-->
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+<!--/* <head> comum: metadados, CSS base e CSS do tema ativo */-->
+<th:block th:fragment="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{${theme.stylesheet}}">
+</th:block>
+
+<!--/* Marca do sistema */-->
+<a th:fragment="brand" class="brand" th:href="@{/}">
+    <span class="brand-mark" aria-hidden="true">◆</span> Login Seguro
+</a>
+
+<!--/* Links de navegação, exibidos conforme o perfil do usuário */-->
+<ul th:fragment="nav-links" class="nav-links">
+    <li sec:authorize="isAnonymous()"><a th:href="@{/login}">Entrar</a></li>
+    <li sec:authorize="isAnonymous()"><a class="btn btn-small" th:href="@{/registro}">Criar conta</a></li>
+
+    <li sec:authorize="isAuthenticated()"><a th:href="@{/painel}">Painel</a></li>
+    <li sec:authorize="isAuthenticated()"><a th:href="@{/usuario/perfil}">Meu perfil</a></li>
+    <li sec:authorize="hasAnyRole('ADMIN','MODERADOR')"><a th:href="@{/moderador/usuarios}">Moderação</a></li>
+    <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/admin/usuarios}">Administração</a></li>
+    <li sec:authorize="isAuthenticated()">
+        <!--/* Logout por POST: o Thymeleaf adiciona o token CSRF automaticamente */-->
+        <form th:action="@{/logout}" method="post" class="inline-form">
+            <button type="submit" class="btn btn-small btn-ghost">
+                Sair (<span sec:authentication="name">usuario</span>)
+            </button>
+        </form>
+    </li>
+</ul>
+
+<!--/* Mensagens de sucesso/erro enviadas via flash attributes */-->
+<th:block th:fragment="alerts">
+    <div th:if="${sucesso}" class="alert alert-success" role="status" th:text="${sucesso}">Sucesso</div>
+    <div th:if="${erro}" class="alert alert-error" role="alert" th:text="${erro}">Erro</div>
+</th:block>
+
+<footer th:fragment="footer" class="site-footer">
+    <p>Login Seguro · Spring Boot, Spring Security, Thymeleaf e MongoDB Atlas ·
+        tema <strong th:text="${theme.name}">padrao</strong></p>
+</footer>
+
+</body>
+</html>

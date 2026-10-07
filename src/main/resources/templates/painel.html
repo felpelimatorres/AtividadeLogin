@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{__${theme.layout}__}">
+<head>
+    <title>Painel</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h1>Olá, <span th:text="${user.name}">Nome</span>!</h1>
+    <p class="lead">
+        Você entrou como <span class="badge" th:classappend="${'role-' + user.role.name().toLowerCase()}"
+                               th:text="${user.role.label}">Perfil</span>.
+        Último acesso: <span th:text="${user.lastLoginAtText}">—</span>.
+    </p>
+
+    <div class="grid three">
+        <article class="card">
+            <h2>Minha conta</h2>
+            <p>Veja seus dados, troque a senha e escolha o tema visual.</p>
+            <a class="btn btn-small" th:href="@{/usuario/perfil}">Abrir perfil</a>
+        </article>
+
+        <article class="card" sec:authorize="hasAnyRole('ADMIN','MODERADOR')">
+            <h2>Moderação</h2>
+            <p>Consulte as contas e ative, desative ou desbloqueie usuários comuns.</p>
+            <a class="btn btn-small" th:href="@{/moderador/usuarios}">Moderar usuários</a>
+        </article>
+
+        <article class="card" sec:authorize="hasRole('ADMIN')">
+            <h2>Administração</h2>
+            <p>Controle total: altere perfis, gerencie qualquer conta e exclua usuários.</p>
+            <a class="btn btn-small" th:href="@{/admin/usuarios}">Administrar usuários</a>
+        </article>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--/*
+  Página de erro genérica (404, 500...). É independente do tema para
+  continuar funcionando mesmo se algo falhar na resolução do layout.
+  Não exibe detalhes técnicos (stack trace) ao usuário.
+*/-->
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Erro · Login Seguro</title>
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/themes/padrao/theme.css}">
+</head>
+<body class="theme-padrao">
+<main class="container page">
+    <div class="card center">
+        <p class="status-code" th:text="${status}">500</p>
+        <h1 th:text="${status == 404} ? 'Página não encontrada' : 'Algo deu errado'">Algo deu errado</h1>
+        <p>Não foi possível concluir sua solicitação.</p>
+        <a class="btn" th:href="@{/}">Voltar ao início</a>
+    </div>
+</main>
+</body>
+</html>
