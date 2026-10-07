@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{__${theme.layout}__}">
+<head>
+    <title>Meu perfil</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h1>Meu perfil</h1>
+
+    <div class="grid two">
+        <article class="card">
+            <h2>Dados da conta</h2>
+            <dl class="details">
+                <dt>Nome</dt><dd th:text="${user.name}">Nome</dd>
+                <dt>Usuário</dt><dd th:text="${user.username}">usuario</dd>
+                <dt>E-mail</dt><dd th:text="${user.email}">email</dd>
+                <dt>Perfil</dt><dd th:text="${user.role.label}">Usuário</dd>
+                <dt>Cadastro</dt><dd th:text="${user.createdAtText}">—</dd>
+                <dt>Último acesso</dt><dd th:text="${user.lastLoginAtText}">—</dd>
+            </dl>
+        </article>
+
+        <article class="card">
+            <h2>Tema visual</h2>
+            <p class="muted">O tema muda layout e cores sem alterar nenhuma regra do sistema.</p>
+            <form th:action="@{/usuario/tema}" method="post" class="form">
+                <label for="theme">Tema</label>
+                <select id="theme" name="theme">
+                    <option th:each="t : ${themes}" th:value="${t}" th:text="${t}"
+                            th:selected="${t == theme.name}">padrao</option>
+                </select>
+                <button type="submit" class="btn">Aplicar tema</button>
+            </form>
+        </article>
+
+        <article class="card">
+            <h2>Alterar senha</h2>
+            <form th:action="@{/usuario/senha}" th:object="${passwordForm}" method="post" class="form" novalidate>
+                <label for="currentPassword">Senha atual</label>
+                <input id="currentPassword" type="password" th:field="*{currentPassword}"
+                       autocomplete="current-password" maxlength="64"
+                       th:classappend="${#fields.hasErrors('currentPassword')} ? 'invalid'">
+                <small class="field-error" th:if="${#fields.hasErrors('currentPassword')}" th:errors="*{currentPassword}"></small>
+
+                <label for="newPassword">Nova senha</label>
+                <input id="newPassword" type="password" th:field="*{newPassword}"
+                       autocomplete="new-password" maxlength="64"
+                       th:classappend="${#fields.hasErrors('newPassword')} ? 'invalid'">
+                <small class="field-error" th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"></small>
+
+                <label for="confirmNewPassword">Confirmar nova senha</label>
+                <input id="confirmNewPassword" type="password" th:field="*{confirmNewPassword}"
+                       autocomplete="new-password" maxlength="64"
+                       th:classappend="${#fields.hasErrors('confirmNewPassword')} ? 'invalid'">
+                <small class="field-error" th:if="${#fields.hasErrors('confirmNewPassword')}" th:errors="*{confirmNewPassword}"></small>
+
+                <button type="submit" class="btn">Salvar nova senha</button>
+            </form>
+        </article>
+    </div>
+</section>
+</body>
+</html>

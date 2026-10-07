@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--/*
+  Tela compartilhada entre /moderador/usuarios e /admin/usuarios.
+  "area" define o prefixo das ações; "fullControl" libera troca de perfil e exclusão.
+  As permissões reais são sempre verificadas no servidor (rotas + @PreAuthorize).
+*/-->
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{__${theme.layout}__}">
+<head>
+    <title th:text="${fullControl} ? 'Administração' : 'Moderação'">Usuários</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h1 th:text="${fullControl} ? 'Administração de usuários' : 'Moderação de usuários'">Usuários</h1>
+    <p class="lead" th:if="${fullControl}">Controle completo das contas: perfil, status, desbloqueio e exclusão.</p>
+    <p class="lead" th:unless="${fullControl}">Você pode ativar, desativar e desbloquear contas de usuários comuns.</p>
+
+    <div class="table-wrap card">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Usuário</th>
+                <th>E-mail</th>
+                <th>Perfil</th>
+                <th>Status</th>
+                <th>Último acesso</th>
+                <th class="actions-col">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="u : ${users}" th:with="self=${u.username == currentUsername}">
+                <td>
+                    <strong th:text="${u.name}">Nome</strong><br>
+                    <span class="muted" th:text="${'@' + u.username}">@usuario</span>
+                    <span class="badge" th:if="${self}">você</span>
+                </td>
+                <td th:text="${u.email}">email</td>
+                <td>
+                    <span class="badge" th:classappend="${'role-' + u.role.name().toLowerCase()}"
+                          th:text="${u.role.label}">Perfil</span>
+                </td>
+                <td>
+                    <span th:if="${u.locked}" class="badge badge-warn">Bloqueado</span>
+                    <span th:if="${u.enabled}" class="badge badge-ok">Ativo</span>
+                    <span th:unless="${u.enabled}" class="badge badge-off">Inativo</span>
+                </td>
+                <td th:text="${u.lastLoginAtText}">—</td>
+                <td class="actions-col">
+                    <th:block th:unless="${self}">
+                        <!--/* Troca de perfil (somente ADMIN) */-->
+                        <form th:if="${fullControl}" th:action="@{__${area}__/usuarios/{id}/perfil(id=${u.id})}"
+                              method="post" class="inline-form">
+                            <label class="visually-hidden" th:for="${'role-' + u.id}">Perfil</label>
+                            <select th:id="${'role-' + u.id}" name="role">
+                                <option th:each="r : ${roles}" th:value="${r}" th:text="${r.label}"
+                                        th:selected="${r == u.role}">Perfil</option>
+                            </select>
+                            <button type="submit" class="btn btn-small">Salvar</button>
+                        </form>
+
+                        <!--/* Ativar/desativar: moderador só vê para contas de USUARIO */-->
+                        <form th:if="${fullControl or u.role.name() == 'USUARIO'}"
+                              th:action="@{__${area}__/usuarios/{id}/status(id=${u.id})}"
+                              method="post" class="inline-form">
+                            <input type="hidden" name="enabled" th:value="${!u.enabled}">
+                            <button type="submit" class="btn btn-small btn-ghost"
+                                    th:text="${u.enabled} ? 'Desativar' : 'Ativar'">Desativar</button>
+                        </form>
+
+                        <form th:if="${u.locked}" th:action="@{__${area}__/usuarios/{id}/desbloquear(id=${u.id})}"
+                              method="post" class="inline-form">
+                            <button type="submit" class="btn btn-small btn-ghost">Desbloquear</button>
+                        </form>
+
+                        <form th:if="${fullControl}" th:action="@{__${area}__/usuarios/{id}/excluir(id=${u.id})}"
+                              method="post" class="inline-form">
+                            <button type="submit" class="btn btn-small btn-danger">Excluir</button>
+                        </form>
+                    </th:block>
+                    <span th:if="${self}" class="muted">—</span>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(users)}">
+                <td colspan="6" class="muted">Nenhum usuário cadastrado.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>
