@@ -1,0 +1,25 @@
+# Segredos — NUNCA versionar
+.env
+*.env.local
+application-local.yml
+
+# Build
+target/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+bin/
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
