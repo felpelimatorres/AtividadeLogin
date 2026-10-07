@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--/*
+  Tema "padrao": layout claro com barra de navegação no topo.
+  As páginas preenchem o fragmento "content" via layout:decorate.
+*/-->
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title layout:title-pattern="$CONTENT_TITLE · Login Seguro">Login Seguro</title>
+    <th:block th:replace="~{fragments/common :: head}"></th:block>
+</head>
+<body class="theme-padrao layout-topbar">
+<header class="topbar">
+    <div class="container topbar-inner">
+        <a th:replace="~{fragments/common :: brand}"></a>
+        <nav aria-label="Navegação principal">
+            <ul th:replace="~{fragments/common :: nav-links}"></ul>
+        </nav>
+    </div>
+</header>
+
+<main class="container page">
+    <th:block th:replace="~{fragments/common :: alerts}"></th:block>
+    <section layout:fragment="content">Conteúdo da página</section>
+</main>
+
+<footer th:replace="~{fragments/common :: footer}"></footer>
+</body>
+</html>

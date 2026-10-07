@@ -1,0 +1,28 @@
+/* Tema "padrao" — claro, barra de navegação no topo. */
+:root {
+    --bg: #f5f6f8;
+    --surface: #ffffff;
+    --surface-alt: #f0f2f6;
+    --text: #18202e;
+    --text-muted: #5b6475;
+    --border: #dde1e8;
+    --primary: #2b54d6;
+    --primary-text: #ffffff;
+    --danger: #c42c38;
+    --ok: #17804f;
+    --warn: #a86b12;
+    --radius: 10px;
+    --font-display: "Georgia", "Times New Roman", serif;
+}
+
+.topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 10;
+}
+.topbar-inner {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: 12px; padding-top: 14px; padding-bottom: 14px;
+}
+
+.hero h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -.01em; }

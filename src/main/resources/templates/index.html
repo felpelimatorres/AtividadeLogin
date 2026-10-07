@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{__${theme.layout}__}">
+<head>
+    <title>Início</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="hero">
+        <h1>Acesso seguro, perfis bem definidos.</h1>
+        <p class="lead">
+            Senhas protegidas com BCrypt, sessões guardadas no MongoDB Atlas e
+            cada área do sistema liberada apenas para o perfil certo.
+        </p>
+        <div class="actions" sec:authorize="isAnonymous()">
+            <a class="btn" th:href="@{/login}">Entrar</a>
+            <a class="btn btn-ghost" th:href="@{/registro}">Criar conta</a>
+        </div>
+        <div class="actions" sec:authorize="isAuthenticated()">
+            <a class="btn" th:href="@{/painel}">Ir para o painel</a>
+        </div>
+    </div>
+
+    <div class="grid three">
+        <article class="card">
+            <h2>Usuário</h2>
+            <p>Acessa o painel, edita o perfil, troca a senha e escolhe o tema visual.</p>
+        </article>
+        <article class="card">
+            <h2>Moderador</h2>
+            <p>Tudo do usuário, mais a lista de contas e o poder de ativar, desativar e desbloquear usuários comuns.</p>
+        </article>
+        <article class="card">
+            <h2>Administrador</h2>
+            <p>Controle completo: altera perfis, gerencia qualquer conta e exclui usuários.</p>
+        </article>
+    </div>
+</section>
+</body>
+</html>
