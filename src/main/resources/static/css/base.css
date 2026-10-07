@@ -1,0 +1,158 @@
+/* =====================================================================
+   base.css — estrutura e componentes neutros.
+   NÃO define cores fixas: tudo vem das variáveis CSS declaradas pelo
+   tema ativo (static/themes/<tema>/theme.css). Para criar um tema novo,
+   basta redefinir as variáveis abaixo e, se quiser, o layout.
+   ===================================================================== */
+
+:root {
+    /* Valores de segurança caso um tema esqueça alguma variável */
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --surface-alt: #eef0f4;
+    --text: #1d2330;
+    --text-muted: #5d6677;
+    --border: #d9dde5;
+    --primary: #2f5bea;
+    --primary-text: #ffffff;
+    --danger: #c62f3b;
+    --ok: #1d8a5a;
+    --warn: #b7791f;
+    --radius: 10px;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .06), 0 4px 16px rgba(0, 0, 0, .05);
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-display: var(--font);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--text);
+    background: var(--bg);
+}
+
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; margin: 0 0 .6em; }
+h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+h2 { font-size: 1.15rem; }
+
+a { color: var(--primary); }
+p { margin: 0 0 1em; }
+
+.container { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+.page { padding-top: 32px; padding-bottom: 48px; }
+.muted { color: var(--text-muted); }
+.lead { font-size: 1.08rem; color: var(--text-muted); }
+.center { text-align: center; }
+
+.visually-hidden {
+    position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ---------- Marca e navegação ---------- */
+.brand {
+    display: inline-flex; align-items: center; gap: .45em;
+    font-family: var(--font-display); font-weight: 700; font-size: 1.1rem;
+    color: var(--text); text-decoration: none;
+}
+.brand-mark { color: var(--primary); }
+
+.nav-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; }
+.nav-links a { color: var(--text); text-decoration: none; font-weight: 500; }
+.nav-links a:hover { color: var(--primary); }
+.nav-links a.btn { color: var(--primary-text); }
+
+/* ---------- Cartões e grades ---------- */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+}
+.grid { display: grid; gap: 20px; margin-top: 24px; }
+.grid.two { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.grid.three { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+.hero { padding: 24px 0 8px; max-width: 720px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
+
+/* ---------- Botões ---------- */
+.btn {
+    display: inline-block; cursor: pointer;
+    font: inherit; font-weight: 600; text-decoration: none; text-align: center;
+    color: var(--primary-text); background: var(--primary);
+    border: 1px solid var(--primary); border-radius: calc(var(--radius) - 4px);
+    padding: 10px 18px;
+    transition: filter .15s ease, background .15s ease;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--primary) 45%, transparent);
+    outline-offset: 2px;
+}
+.btn-small { padding: 6px 12px; font-size: .9rem; }
+.btn-block { width: 100%; }
+.btn-ghost { background: transparent; color: var(--primary); }
+.btn-danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+
+.inline-form { display: inline-flex; gap: 6px; align-items: center; margin: 2px 4px 2px 0; }
+
+/* ---------- Formulários ---------- */
+.auth-card { max-width: 440px; margin: 16px auto 0; }
+.form { display: flex; flex-direction: column; gap: 6px; }
+.form label { font-weight: 600; margin-top: 10px; }
+.form .btn { margin-top: 18px; }
+
+input, select {
+    font: inherit; color: var(--text);
+    background: var(--surface-alt);
+    border: 1px solid var(--border); border-radius: calc(var(--radius) - 4px);
+    padding: 10px 12px; width: 100%;
+}
+.inline-form select { width: auto; padding: 6px 8px; }
+input.invalid { border-color: var(--danger); }
+.field-error { color: var(--danger); font-size: .88rem; }
+.hint { color: var(--text-muted); font-size: .85rem; }
+
+/* ---------- Alertas ---------- */
+.alert { border-radius: calc(var(--radius) - 4px); padding: 12px 14px; margin-bottom: 16px; border: 1px solid; }
+.alert p { margin: 0; }
+.alert-success { color: var(--ok); border-color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, var(--surface)); }
+.alert-error { color: var(--danger); border-color: var(--danger); background: color-mix(in srgb, var(--danger) 10%, var(--surface)); }
+
+/* ---------- Badges ---------- */
+.badge {
+    display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .02em;
+    padding: 2px 9px; border-radius: 999px;
+    background: var(--surface-alt); color: var(--text-muted); border: 1px solid var(--border);
+}
+.badge.role-admin { color: var(--danger); border-color: currentColor; }
+.badge.role-moderador { color: var(--warn); border-color: currentColor; }
+.badge.role-usuario { color: var(--primary); border-color: currentColor; }
+.badge-ok { color: var(--ok); border-color: currentColor; }
+.badge-off { color: var(--text-muted); }
+.badge-warn { color: var(--warn); border-color: currentColor; }
+
+/* ---------- Tabelas ---------- */
+.table-wrap { padding: 0; overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; font-size: .94rem; }
+.table th, .table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.table th { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); background: var(--surface-alt); }
+.table tr:last-child td { border-bottom: 0; }
+.actions-col { min-width: 260px; }
+
+/* ---------- Detalhes ---------- */
+.details { display: grid; grid-template-columns: max-content 1fr; gap: 8px 18px; margin: 0; }
+.details dt { color: var(--text-muted); }
+.details dd { margin: 0; font-weight: 500; word-break: break-word; }
+
+.status-code { font-family: var(--font-display); font-size: 3.5rem; font-weight: 800; color: var(--primary); margin: 0; }
+
+.site-footer { padding: 24px 16px; text-align: center; font-size: .85rem; color: var(--text-muted); }
