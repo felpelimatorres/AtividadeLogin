@@ -5,7 +5,6 @@ import org.springframework.security.authentication.event.AuthenticationFailureBa
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.stereotype.Component;
 
-/** Escuta os eventos de autenticação publicados pelo Spring Security. */
 @Component
 public class AuthenticationEventsListener {
 

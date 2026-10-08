@@ -1,8 +1,12 @@
 # Login Seguro — Spring Boot + Spring Security + Thymeleaf + MongoDB Atlas
 
-Sistema web de autenticação e autorização com controle completo de usuários, três perfis de acesso,
+Portal acadêmico da **Universidade Vale Sereno** (instituição fictícia): autenticação e autorização
+com controle completo de contas, três vínculos de acesso (Estudante, Secretaria e Administração),
 senhas criptografadas com BCrypt e usuários **e sessões** armazenados no MongoDB Atlas.
 A interface usa Thymeleaf com **temas plugáveis**, separados da lógica de negócio.
+
+Na interface, os perfis técnicos aparecem com nomes institucionais:
+`USUARIO` → Estudante, `MODERADOR` → Secretaria e `ADMIN` → Administração.
 
 > Projeto individual — Sistemas de Informação · UMC
 > Autor: Felipe Lima Torres

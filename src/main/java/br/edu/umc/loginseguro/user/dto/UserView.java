@@ -7,10 +7,6 @@ import java.time.format.DateTimeFormatter;
 import br.edu.umc.loginseguro.user.domain.Role;
 import br.edu.umc.loginseguro.user.domain.User;
 
-/**
- * Projeção somente-leitura enviada às telas. Não carrega o hash da senha,
- * evitando que ele chegue à camada de apresentação por engano.
- */
 public final class UserView {
 
     private static final DateTimeFormatter DATE_TIME =

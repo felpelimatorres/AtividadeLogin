@@ -5,35 +5,40 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{__${theme.layout}__}">
 <head>
-    <title>Painel</title>
+    <title>Meu portal</title>
 </head>
 <body>
 <section layout:fragment="content">
-    <h1>Olá, <span th:text="${user.name}">Nome</span>!</h1>
+    <p class="eyebrow">Portal Acadêmico</p>
+    <h1>Olá, <span th:text="${user.name}">Nome</span>.</h1>
     <p class="lead">
-        Você entrou como <span class="badge" th:classappend="${'role-' + user.role.name().toLowerCase()}"
-                               th:text="${user.role.label}">Perfil</span>.
-        Último acesso: <span th:text="${user.lastLoginAtText}">—</span>.
+        <span class="badge" th:classappend="${'role-' + user.role.name().toLowerCase()}"
+              th:text="${user.role.label}">Perfil</span>
+        Último acesso em <span th:text="${user.lastLoginAtText}">—</span>.
     </p>
 
-    <div class="grid three">
-        <article class="card">
-            <h2>Minha conta</h2>
-            <p>Veja seus dados, troque a senha e escolha o tema visual.</p>
-            <a class="btn btn-small" th:href="@{/usuario/perfil}">Abrir perfil</a>
-        </article>
+    <div class="home">
+        <div class="grid two">
+            <article class="card">
+                <h2>Meus dados</h2>
+                <p>Confira seu cadastro, altere sua senha e escolha a aparência do portal.</p>
+                <a class="btn btn-small" th:href="@{/usuario/perfil}">Abrir meus dados</a>
+            </article>
 
-        <article class="card" sec:authorize="hasAnyRole('ADMIN','MODERADOR')">
-            <h2>Moderação</h2>
-            <p>Consulte as contas e ative, desative ou desbloqueie usuários comuns.</p>
-            <a class="btn btn-small" th:href="@{/moderador/usuarios}">Moderar usuários</a>
-        </article>
+            <article class="card" sec:authorize="hasAnyRole('ADMIN','MODERADOR')">
+                <h2>Secretaria acadêmica</h2>
+                <p>Ative, inative ou libere o acesso de contas de estudantes.</p>
+                <a class="btn btn-small" th:href="@{/moderador/usuarios}">Abrir secretaria</a>
+            </article>
 
-        <article class="card" sec:authorize="hasRole('ADMIN')">
-            <h2>Administração</h2>
-            <p>Controle total: altere perfis, gerencie qualquer conta e exclua usuários.</p>
-            <a class="btn btn-small" th:href="@{/admin/usuarios}">Administrar usuários</a>
-        </article>
+            <article class="card" sec:authorize="hasRole('ADMIN')">
+                <h2>Administração do portal</h2>
+                <p>Gerencie todas as contas, vínculos e permissões de acesso.</p>
+                <a class="btn btn-small" th:href="@{/admin/usuarios}">Abrir administração</a>
+            </article>
+        </div>
+
+        <section th:replace="~{fragments/common :: notices}"></section>
     </div>
 </section>
 </body>

@@ -17,7 +17,6 @@ import br.edu.umc.loginseguro.user.service.BusinessException;
 import br.edu.umc.loginseguro.user.service.UserService;
 import jakarta.validation.Valid;
 
-/** Área de qualquer usuário autenticado: perfil, troca de senha e de tema. */
 @Controller
 @RequestMapping("/usuario")
 public class UserAreaController {
@@ -52,7 +51,6 @@ public class UserAreaController {
                 result.rejectValue(e.getField() != null ? e.getField() : "currentPassword", "senha", e.getMessage());
             }
         }
-        // Nunca devolve as senhas digitadas para a tela
         form.setCurrentPassword(null);
         form.setNewPassword(null);
         form.setConfirmNewPassword(null);
@@ -67,7 +65,7 @@ public class UserAreaController {
             redirect.addFlashAttribute("erro", "Tema inválido.");
         } else {
             userService.changeTheme(authentication.getName(), theme);
-            redirect.addFlashAttribute("sucesso", "Tema atualizado.");
+            redirect.addFlashAttribute("sucesso", "Aparência atualizada.");
         }
         return "redirect:/usuario/perfil";
     }

@@ -8,10 +8,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/**
- * Usuário persistido na coleção {@code users} do MongoDB Atlas.
- * A senha nunca é armazenada em texto puro: apenas o hash BCrypt.
- */
 @Document(collection = "users")
 public class User {
 
@@ -38,7 +34,6 @@ public class User {
 
     private Instant lastLoginAt;
 
-    /** Tema visual escolhido pelo usuário (null = tema padrão da aplicação). */
     private String theme;
 
     @CreatedDate
@@ -58,7 +53,6 @@ public class User {
         this.role = role;
     }
 
-    /** Indica se a conta está bloqueada temporariamente no instante informado. */
     public boolean isLockedAt(Instant now) {
         return lockedUntil != null && lockedUntil.isAfter(now);
     }

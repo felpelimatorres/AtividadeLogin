@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-/** Dados do formulário de cadastro. Nunca expõe nem recebe o perfil (role). */
 @FieldsMatch(field = "password", confirmField = "confirmPassword", message = "A confirmação não confere com a senha")
 public class RegistrationForm {
 

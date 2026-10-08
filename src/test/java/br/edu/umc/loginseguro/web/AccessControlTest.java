@@ -33,10 +33,6 @@ import br.edu.umc.loginseguro.user.domain.Role;
 import br.edu.umc.loginseguro.user.dto.UserView;
 import br.edu.umc.loginseguro.user.service.UserService;
 
-/**
- * Verifica as regras de autorização por perfil, a proteção CSRF e a
- * validação do cadastro, sem precisar de um MongoDB real.
- */
 @WebMvcTest
 @Import(SecurityConfig.class)
 class AccessControlTest {
@@ -60,8 +56,6 @@ class AccessControlTest {
         when(userService.listAll()).thenReturn(List.of(view));
     }
 
-    // ---------- Rotas públicas ----------
-
     @Test
     void paginasPublicasSaoAcessiveisSemLogin() throws Exception {
         mvc.perform(get("/")).andExpect(status().isOk());
@@ -78,8 +72,6 @@ class AccessControlTest {
                 .andExpect(status().is3xxRedirection());
     }
 
-    // ---------- Perfil USUARIO ----------
-
     @Test
     @WithMockUser(username = "user", roles = "USUARIO")
     void usuarioAcessaPainelEPerfil() throws Exception {
@@ -94,16 +86,12 @@ class AccessControlTest {
         mvc.perform(get("/admin/usuarios")).andExpect(status().isForbidden());
     }
 
-    // ---------- Perfil MODERADOR ----------
-
     @Test
     @WithMockUser(username = "mod", roles = "MODERADOR")
     void moderadorAcessaModeracaoMasNaoAdministracao() throws Exception {
         mvc.perform(get("/moderador/usuarios")).andExpect(status().isOk());
         mvc.perform(get("/admin/usuarios")).andExpect(status().isForbidden());
     }
-
-    // ---------- Perfil ADMIN ----------
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
@@ -112,8 +100,6 @@ class AccessControlTest {
         mvc.perform(get("/moderador/usuarios")).andExpect(status().isOk());
         mvc.perform(get("/admin/usuarios")).andExpect(status().isOk());
     }
-
-    // ---------- CSRF e validação ----------
 
     @Test
     void cadastroSemTokenCsrfEhRejeitado() throws Exception {

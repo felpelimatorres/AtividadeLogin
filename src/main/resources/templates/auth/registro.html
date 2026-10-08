@@ -4,51 +4,60 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{__${theme.layout}__}">
 <head>
-    <title>Criar conta</title>
+    <title>Primeiro acesso</title>
 </head>
 <body>
 <section layout:fragment="content">
-    <div class="auth-card card">
-        <h1>Criar conta</h1>
+    <div class="auth-split card">
+        <aside class="auth-aside">
+            <img class="brand-logo" th:src="@{/img/brasao.svg}" alt="">
+            <h2>Primeiro acesso</h2>
+            <p>Crie seu cadastro para acessar o Portal Acadêmico da Universidade Vale Sereno.</p>
+            <p class="auth-note">Use um e-mail que você consulta com frequência: é por ele que a secretaria
+                entra em contato.</p>
+        </aside>
 
-        <form th:action="@{/registro}" th:object="${form}" method="post" class="form" novalidate>
-            <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-error" role="alert">
-                <p th:each="e : ${#fields.globalErrors()}" th:text="${e}">Erro</p>
-            </div>
+        <div class="auth-main">
+            <h1>Criar cadastro</h1>
 
-            <label for="name">Nome completo</label>
-            <input id="name" type="text" th:field="*{name}" autocomplete="name" maxlength="100"
-                   th:classappend="${#fields.hasErrors('name')} ? 'invalid'">
-            <small class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+            <form th:action="@{/registro}" th:object="${form}" method="post" class="form" novalidate>
+                <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-error" role="alert">
+                    <p th:each="e : ${#fields.globalErrors()}" th:text="${e}">Erro</p>
+                </div>
 
-            <label for="username">Nome de usuário</label>
-            <input id="username" type="text" th:field="*{username}" autocomplete="username" maxlength="30"
-                   th:classappend="${#fields.hasErrors('username')} ? 'invalid'">
-            <small class="field-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+                <label for="name">Nome completo</label>
+                <input id="name" type="text" th:field="*{name}" autocomplete="name" maxlength="100"
+                       th:classappend="${#fields.hasErrors('name')} ? 'invalid'">
+                <small class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
 
-            <label for="email">E-mail</label>
-            <input id="email" type="email" th:field="*{email}" autocomplete="email" maxlength="120"
-                   th:classappend="${#fields.hasErrors('email')} ? 'invalid'">
-            <small class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                <label for="username">Login</label>
+                <input id="username" type="text" th:field="*{username}" autocomplete="username" maxlength="30"
+                       th:classappend="${#fields.hasErrors('username')} ? 'invalid'">
+                <small class="field-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
 
-            <!--/* th:field nunca re-preenche campos type="password" */-->
-            <label for="password">Senha</label>
-            <input id="password" type="password" th:field="*{password}"
-                   autocomplete="new-password" maxlength="64"
-                   th:classappend="${#fields.hasErrors('password')} ? 'invalid'">
-            <small class="hint">Mínimo 8 caracteres, com maiúscula, minúscula, número e símbolo.</small>
-            <small class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+                <label for="email">E-mail</label>
+                <input id="email" type="email" th:field="*{email}" autocomplete="email" maxlength="120"
+                       th:classappend="${#fields.hasErrors('email')} ? 'invalid'">
+                <small class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
 
-            <label for="confirmPassword">Confirmar senha</label>
-            <input id="confirmPassword" type="password" th:field="*{confirmPassword}"
-                   autocomplete="new-password" maxlength="64"
-                   th:classappend="${#fields.hasErrors('confirmPassword')} ? 'invalid'">
-            <small class="field-error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></small>
+                <label for="password">Senha</label>
+                <input id="password" type="password" th:field="*{password}"
+                       autocomplete="new-password" maxlength="64"
+                       th:classappend="${#fields.hasErrors('password')} ? 'invalid'">
+                <small class="hint">Pelo menos 8 caracteres, com letra maiúscula, minúscula, número e símbolo.</small>
+                <small class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
 
-            <button type="submit" class="btn btn-block">Cadastrar</button>
-        </form>
+                <label for="confirmPassword">Confirmar senha</label>
+                <input id="confirmPassword" type="password" th:field="*{confirmPassword}"
+                       autocomplete="new-password" maxlength="64"
+                       th:classappend="${#fields.hasErrors('confirmPassword')} ? 'invalid'">
+                <small class="field-error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></small>
 
-        <p class="muted">Já tem conta? <a th:href="@{/login}">Entrar</a></p>
+                <button type="submit" class="btn btn-block">Concluir cadastro</button>
+            </form>
+
+            <p class="muted auth-switch">Já tem cadastro? <a th:href="@{/login}">Acesse o portal</a></p>
+        </div>
     </div>
 </section>
 </body>

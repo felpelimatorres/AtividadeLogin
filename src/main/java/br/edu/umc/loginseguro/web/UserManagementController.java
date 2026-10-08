@@ -8,11 +8,6 @@ import br.edu.umc.loginseguro.user.domain.Role;
 import br.edu.umc.loginseguro.user.service.BusinessException;
 import br.edu.umc.loginseguro.user.service.UserService;
 
-/**
- * Base comum das telas de gestão de usuários (moderador e administrador).
- * Cada subclasse define seu prefixo de rota e o que pode ser feito;
- * o template {@code gestao/usuarios} é compartilhado.
- */
 abstract class UserManagementController {
 
     protected final UserService userService;
@@ -21,10 +16,8 @@ abstract class UserManagementController {
         this.userService = userService;
     }
 
-    /** Prefixo da rota, ex.: "/admin" ou "/moderador". */
     protected abstract String area();
 
-    /** Se a tela permite trocar perfil e excluir usuários. */
     protected abstract boolean fullControl();
 
     protected String list(Authentication authentication, Model model) {
@@ -45,7 +38,6 @@ abstract class UserManagementController {
         return run(redirect, "Conta desbloqueada.", () -> userService.unlock(id));
     }
 
-    /** Executa a ação e converte erros de negócio em mensagem para a tela. */
     protected String run(RedirectAttributes redirect, String successMessage, Runnable action) {
         try {
             action.run();

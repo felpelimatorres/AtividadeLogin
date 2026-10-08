@@ -13,7 +13,6 @@ import br.edu.umc.loginseguro.user.service.BusinessException;
 import br.edu.umc.loginseguro.user.service.UserService;
 import jakarta.validation.Valid;
 
-/** Login (processado pelo Spring Security) e cadastro de novos usuários. */
 @Controller
 public class AuthController {
 

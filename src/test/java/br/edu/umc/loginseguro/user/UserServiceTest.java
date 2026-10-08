@@ -31,7 +31,6 @@ class UserServiceTest {
     @Mock
     private UserRepository repository;
 
-    // Custo baixo apenas para o teste ficar rápido
     private final PasswordEncoder encoder = new BCryptPasswordEncoder(4);
 
     private UserService service;

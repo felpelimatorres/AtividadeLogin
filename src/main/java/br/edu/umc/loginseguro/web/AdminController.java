@@ -13,7 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.edu.umc.loginseguro.user.domain.Role;
 import br.edu.umc.loginseguro.user.service.UserService;
 
-/** Área do ADMIN: controle completo dos usuários (perfil, status, desbloqueio e exclusão). */
 @Controller
 @RequestMapping("/admin")
 public class AdminController extends UserManagementController {
@@ -40,7 +39,7 @@ public class AdminController extends UserManagementController {
     @PostMapping("/usuarios/{id}/perfil")
     public String changeRole(@PathVariable String id, @RequestParam Role role,
                              Authentication authentication, RedirectAttributes redirect) {
-        return run(redirect, "Perfil alterado para " + role.getLabel() + ".",
+        return run(redirect, "Vínculo alterado para " + role.getLabel() + ".",
                 () -> userService.changeRole(id, role, authentication.getName()));
     }
 

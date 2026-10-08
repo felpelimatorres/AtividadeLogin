@@ -12,11 +12,6 @@ import br.edu.umc.loginseguro.user.domain.Role;
 import br.edu.umc.loginseguro.user.service.UserService;
 import br.edu.umc.loginseguro.user.validation.PasswordPolicy;
 
-/**
- * Cria o primeiro administrador a partir de variáveis de ambiente
- * (ADMIN_USERNAME, ADMIN_EMAIL, ADMIN_PASSWORD) quando ainda não existe
- * nenhum ADMIN no banco. Nenhuma credencial fica fixa no código.
- */
 @Component
 public class AdminBootstrap implements ApplicationRunner {
 

@@ -4,15 +4,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{__${theme.layout}__}">
 <head>
-    <title>Acesso negado</title>
+    <title>Área restrita</title>
 </head>
 <body>
 <section layout:fragment="content">
     <div class="card center">
         <p class="status-code">403</p>
-        <h1>Acesso negado</h1>
-        <p>Seu perfil não tem permissão para acessar esta página.</p>
-        <a class="btn" th:href="@{/painel}">Voltar ao painel</a>
+        <h1>Área restrita</h1>
+        <p>Seu vínculo não dá acesso a esta área. Se precisar dela, fale com a secretaria acadêmica.</p>
+        <a class="btn" th:href="@{/painel}">Voltar ao meu portal</a>
     </div>
 </section>
 </body>

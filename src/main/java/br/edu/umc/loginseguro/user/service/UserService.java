@@ -15,11 +15,6 @@ import br.edu.umc.loginseguro.user.dto.RegistrationForm;
 import br.edu.umc.loginseguro.user.dto.UserView;
 import br.edu.umc.loginseguro.user.repository.UserRepository;
 
-/**
- * Regras de negócio de usuários. Os métodos administrativos também são
- * protegidos por {@link PreAuthorize} (defesa em profundidade): mesmo que uma
- * rota seja liberada por engano, o serviço continua exigindo o perfil certo.
- */
 @Service
 public class UserService {
 
@@ -31,16 +26,10 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // ------------------------------------------------------------------
-    // Cadastro e conta própria
-    // ------------------------------------------------------------------
-
-    /** Cadastro público: todo novo usuário recebe o perfil USUARIO. */
     public User register(RegistrationForm form) {
         return create(form.getName(), form.getUsername(), form.getEmail(), form.getPassword(), Role.USUARIO);
     }
 
-    /** Criação com perfil explícito (usada pelo bootstrap do administrador). */
     public User create(String name, String username, String email, String rawPassword, Role role) {
         String normalizedUsername = normalize(username);
         String normalizedEmail = normalize(email);
@@ -57,7 +46,6 @@ public class UserService {
         try {
             return repository.save(user);
         } catch (DuplicateKeyException e) {
-            // Corrida entre duas requisições simultâneas: o índice único do MongoDB garante a regra
             throw new BusinessException("Usuário ou e-mail já cadastrado");
         }
     }
@@ -84,10 +72,6 @@ public class UserService {
         repository.save(user);
     }
 
-    // ------------------------------------------------------------------
-    // Gestão de usuários (moderador / administrador)
-    // ------------------------------------------------------------------
-
     @PreAuthorize("hasAnyRole('ADMIN','MODERADOR')")
     public List<UserView> listAll() {
         return repository.findAll(Sort.by(Sort.Direction.ASC, "username")).stream()
@@ -95,16 +79,12 @@ public class UserService {
                 .toList();
     }
 
-    /**
-     * Ativa/desativa uma conta. Moderadores só podem alterar contas de perfil
-     * USUARIO; ninguém pode desativar a própria conta.
-     */
     @PreAuthorize("hasAnyRole('ADMIN','MODERADOR')")
     public void setEnabled(String id, boolean enabled, String actorUsername, Role actorRole) {
         User target = getById(id);
         ensureNotSelf(target, actorUsername, "Você não pode alterar o status da própria conta");
         if (actorRole != Role.ADMIN && target.getRole() != Role.USUARIO) {
-            throw new BusinessException("Moderadores só podem alterar contas de usuários comuns");
+            throw new BusinessException("A secretaria só pode alterar contas de estudantes");
         }
         if (!enabled && target.getRole() == Role.ADMIN) {
             ensureAnotherActiveAdmin(target);
@@ -113,7 +93,6 @@ public class UserService {
         repository.save(target);
     }
 
-    /** Desbloqueia uma conta bloqueada por excesso de tentativas de login. */
     @PreAuthorize("hasAnyRole('ADMIN','MODERADOR')")
     public void unlock(String id) {
         User target = getById(id);
@@ -147,10 +126,6 @@ public class UserService {
         return repository.countByRole(Role.ADMIN) > 0;
     }
 
-    // ------------------------------------------------------------------
-    // Auxiliares
-    // ------------------------------------------------------------------
-
     private User getByUsername(String username) {
         return repository.findByUsername(username)
                 .orElseThrow(() -> new BusinessException("Usuário não encontrado"));
@@ -167,7 +142,6 @@ public class UserService {
         }
     }
 
-    /** Impede que o sistema fique sem nenhum administrador. */
     private void ensureAnotherActiveAdmin(User target) {
         long admins = repository.countByRole(Role.ADMIN);
         if (target.getRole() == Role.ADMIN && admins <= 1) {

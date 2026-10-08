@@ -15,23 +15,11 @@ import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWrite
 
 import jakarta.servlet.DispatcherType;
 
-/**
- * Configuração central de autenticação e autorização.
- *
- * <pre>
- *  Rota                         Perfis com acesso
- *  /, /login, /registro         público
- *  /painel, /usuario/**         USUARIO, MODERADOR, ADMIN
- *  /moderador/**                MODERADOR, ADMIN
- *  /admin/**                    ADMIN
- * </pre>
- */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    /** Nome do cookie de sessão (definido em {@link SessionConfig}). */
     public static final String SESSION_COOKIE = "LSSESSION";
 
     private static final String CONTENT_SECURITY_POLICY =
@@ -63,7 +51,6 @@ public class SecurityConfig {
                 .failureHandler(loginFailureHandler())
                 .permitAll())
 
-            // Logout somente via POST (com token CSRF), invalidando a sessão no MongoDB
             .logout(logout -> logout
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
@@ -72,13 +59,11 @@ public class SecurityConfig {
                 .deleteCookies(SESSION_COOKIE)
                 .permitAll())
 
-            // Gera um novo ID de sessão após o login (evita session fixation)
             .sessionManagement(session -> session
                 .sessionFixation(fixation -> fixation.changeSessionId()))
 
             .exceptionHandling(ex -> ex.accessDeniedPage("/acesso-negado"))
 
-            // CSRF fica habilitado (padrão); o Thymeleaf injeta o token nos formulários com th:action
             .headers(headers -> headers
                 .contentSecurityPolicy(csp -> csp.policyDirectives(CONTENT_SECURITY_POLICY))
                 .frameOptions(frame -> frame.deny())
@@ -87,16 +72,11 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /**
-     * BCrypt com fator de custo 12: hash lento e com salt aleatório por senha,
-     * o que inviabiliza ataques com tabelas pré-calculadas.
-     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);
     }
 
-    /** Redireciona para a tela de login com o motivo da falha, sem revelar se o usuário existe. */
     private AuthenticationFailureHandler loginFailureHandler() {
         return (request, response, exception) -> {
             String reason;

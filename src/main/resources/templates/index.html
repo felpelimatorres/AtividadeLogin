@@ -9,33 +9,39 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <div class="hero">
-        <h1>Acesso seguro, perfis bem definidos.</h1>
-        <p class="lead">
-            Senhas protegidas com BCrypt, sessões guardadas no MongoDB Atlas e
-            cada área do sistema liberada apenas para o perfil certo.
-        </p>
-        <div class="actions" sec:authorize="isAnonymous()">
-            <a class="btn" th:href="@{/login}">Entrar</a>
-            <a class="btn btn-ghost" th:href="@{/registro}">Criar conta</a>
+    <div class="home">
+        <div class="hero">
+            <p class="eyebrow">Portal Acadêmico</p>
+            <h1>Sua vida acadêmica, em um só lugar.</h1>
+            <p class="lead">
+                Consulte seus dados cadastrais, acompanhe os avisos da secretaria e
+                mantenha seu acesso sempre em dia.
+            </p>
+            <div class="actions" sec:authorize="isAnonymous()">
+                <a class="btn" th:href="@{/login}">Acessar portal</a>
+                <a class="btn btn-ghost" th:href="@{/registro}">Primeiro acesso</a>
+            </div>
+            <div class="actions" sec:authorize="isAuthenticated()">
+                <a class="btn" th:href="@{/painel}">Ir para o meu portal</a>
+            </div>
         </div>
-        <div class="actions" sec:authorize="isAuthenticated()">
-            <a class="btn" th:href="@{/painel}">Ir para o painel</a>
-        </div>
+
+        <section th:replace="~{fragments/common :: notices}"></section>
     </div>
 
     <div class="grid three">
         <article class="card">
-            <h2>Usuário</h2>
-            <p>Acessa o painel, edita o perfil, troca a senha e escolhe o tema visual.</p>
+            <h2>Estudantes</h2>
+            <p>Dados cadastrais, alteração de senha e preferências de aparência do portal.</p>
         </article>
         <article class="card">
-            <h2>Moderador</h2>
-            <p>Tudo do usuário, mais a lista de contas e o poder de ativar, desativar e desbloquear usuários comuns.</p>
+            <h2>Secretaria acadêmica</h2>
+            <p>Acompanhamento das contas de estudantes, ativação de cadastros e liberação de acessos.</p>
         </article>
         <article class="card">
-            <h2>Administrador</h2>
-            <p>Controle completo: altera perfis, gerencia qualquer conta e exclui usuários.</p>
+            <h2>Problemas para entrar?</h2>
+            <p>Após cinco tentativas sem sucesso, o acesso fica suspenso por 15 minutos.
+                A secretaria pode liberá-lo antes, se necessário.</p>
         </article>
     </div>
 </section>

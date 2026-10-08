@@ -9,10 +9,6 @@ import java.lang.annotation.Target;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-/**
- * Validação de classe que exige que dois campos tenham o mesmo valor
- * (ex.: senha e confirmação). O erro é associado ao campo {@code confirmField}.
- */
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

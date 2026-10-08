@@ -10,11 +10,6 @@ import org.springframework.stereotype.Service;
 
 import br.edu.umc.loginseguro.user.repository.UserRepository;
 
-/**
- * Proteção contra força bruta: após N falhas seguidas a conta fica
- * bloqueada temporariamente. As contagens ficam no próprio documento do
- * usuário, então valem para todas as instâncias da aplicação.
- */
 @Service
 public class LoginAttemptService {
 
@@ -38,7 +33,6 @@ public class LoginAttemptService {
     public void loginFailed(String login) {
         repository.findByLogin(login).ifPresent(user -> {
             Instant now = clock.instant();
-            // Um bloqueio já vencido zera a contagem antes de registrar a nova falha
             if (user.getLockedUntil() != null && !user.isLockedAt(now)) {
                 user.setLockedUntil(null);
                 user.setFailedLoginAttempts(0);

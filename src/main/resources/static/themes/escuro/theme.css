@@ -1,20 +1,21 @@
-/* Tema "escuro" — paleta escura e menu lateral fixo. */
 :root {
-    --bg: #11141a;
-    --surface: #191d25;
-    --surface-alt: #222733;
-    --text: #e7eaf0;
-    --text-muted: #9aa3b4;
-    --border: #2c3240;
-    --primary: #5fd0a8;
-    --primary-text: #0d1a14;
-    --danger: #ff6b6b;
-    --ok: #5fd0a8;
+    --bg: #0f1420;
+    --surface: #161d2c;
+    --surface-alt: #1e2739;
+    --text: #e8eaf0;
+    --text-muted: #9ba5b9;
+    --border: #2a3448;
+    --primary: #d4a94f;
+    --primary-text: #1a1406;
+    --accent: #d4a94f;
+    --inst: #0b1019;
+    --inst-text: #efe6d2;
+    --danger: #ff7b72;
+    --ok: #6fcf97;
     --warn: #f0b85a;
     --radius: 6px;
     --shadow: none;
-    --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    --font-display: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    --font-display: "Georgia", "Times New Roman", serif;
 }
 
 .shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
@@ -36,11 +37,12 @@
 
 .shell-main { min-width: 0; display: flex; flex-direction: column; }
 .shell-main .page { flex: 1; width: 100%; max-width: 1080px; padding-left: 32px; padding-right: 32px; }
+.shell-main .site-footer .container { max-width: 1080px; margin: 0; padding: 0 32px; }
 
 @media (max-width: 760px) {
     .shell { grid-template-columns: 1fr; }
     .sidebar { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--border); gap: 14px; }
     .sidebar .nav-links { flex-direction: row; flex-wrap: wrap; }
     .sidebar .nav-links a, .sidebar .nav-links .btn-ghost { width: auto; }
-    .shell-main .page { padding-left: 16px; padding-right: 16px; }
+    .shell-main .page, .shell-main .site-footer .container { padding-left: 16px; padding-right: 16px; }
 }

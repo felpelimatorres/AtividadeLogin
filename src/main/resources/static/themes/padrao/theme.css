@@ -1,28 +1,30 @@
-/* Tema "padrao" — claro, barra de navegação no topo. */
 :root {
-    --bg: #f5f6f8;
+    --bg: #f5f3ee;
     --surface: #ffffff;
-    --surface-alt: #f0f2f6;
-    --text: #18202e;
-    --text-muted: #5b6475;
-    --border: #dde1e8;
-    --primary: #2b54d6;
+    --surface-alt: #f1eee7;
+    --text: #1b2433;
+    --text-muted: #5a6273;
+    --border: #e0dbd0;
+    --primary: #1f3a68;
     --primary-text: #ffffff;
-    --danger: #c42c38;
+    --accent: #a8781f;
+    --inst: #1f3a68;
+    --inst-text: #f4efe3;
+    --danger: #b3261e;
     --ok: #17804f;
     --warn: #a86b12;
-    --radius: 10px;
+    --radius: 8px;
     --font-display: "Georgia", "Times New Roman", serif;
 }
 
 .topbar {
     background: var(--surface);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 3px solid var(--accent);
     position: sticky; top: 0; z-index: 10;
 }
 .topbar-inner {
     display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-    gap: 12px; padding-top: 14px; padding-bottom: 14px;
+    gap: 12px; padding-top: 12px; padding-bottom: 12px;
 }
 
-.hero h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -.01em; }
+.hero h1 { font-size: clamp(2rem, 5vw, 2.9rem); letter-spacing: -.01em; }

@@ -1,12 +1,4 @@
-/* =====================================================================
-   base.css — estrutura e componentes neutros.
-   NÃO define cores fixas: tudo vem das variáveis CSS declaradas pelo
-   tema ativo (static/themes/<tema>/theme.css). Para criar um tema novo,
-   basta redefinir as variáveis abaixo e, se quiser, o layout.
-   ===================================================================== */
-
 :root {
-    /* Valores de segurança caso um tema esqueça alguma variável */
     --bg: #f6f7f9;
     --surface: #ffffff;
     --surface-alt: #eef0f4;
@@ -15,6 +7,9 @@
     --border: #d9dde5;
     --primary: #2f5bea;
     --primary-text: #ffffff;
+    --accent: #a8781f;
+    --inst: #1f3a68;
+    --inst-text: #f4efe3;
     --danger: #c62f3b;
     --ok: #1d8a5a;
     --warn: #b7791f;
@@ -55,20 +50,23 @@ p { margin: 0 0 1em; }
     clip: rect(0 0 0 0); white-space: nowrap;
 }
 
-/* ---------- Marca e navegação ---------- */
 .brand {
-    display: inline-flex; align-items: center; gap: .45em;
-    font-family: var(--font-display); font-weight: 700; font-size: 1.1rem;
+    display: inline-flex; align-items: center; gap: .65em;
     color: var(--text); text-decoration: none;
 }
-.brand-mark { color: var(--primary); }
+.brand-logo { width: 40px; height: 40px; flex: none; }
+.brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+.brand-name { font-family: var(--font-display); font-weight: 700; font-size: 1.08rem; }
+.brand-sub {
+    font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent);
+}
 
 .nav-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; }
 .nav-links a { color: var(--text); text-decoration: none; font-weight: 500; }
 .nav-links a:hover { color: var(--primary); }
 .nav-links a.btn { color: var(--primary-text); }
 
-/* ---------- Cartões e grades ---------- */
 .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -80,10 +78,27 @@ p { margin: 0 0 1em; }
 .grid.two { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 .grid.three { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
 
-.hero { padding: 24px 0 8px; max-width: 720px; }
+.eyebrow {
+    font-size: .76rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 .5em;
+}
+
+.home {
+    display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 32px; align-items: start;
+}
+.home > .grid { margin-top: 0; }
+@media (max-width: 860px) { .home { grid-template-columns: 1fr; } }
+
+.hero { padding: 24px 0 8px; max-width: 640px; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; }
 
-/* ---------- Botões ---------- */
+.notices { border-top: 4px solid var(--accent); }
+.notice-list { list-style: none; margin: 0; padding: 0; }
+.notice-list li { padding: 12px 0; border-top: 1px solid var(--border); }
+.notice-list li:first-child { border-top: 0; padding-top: 0; }
+.notice-list time { display: block; font-size: .8rem; font-weight: 700; color: var(--accent); }
+
 .btn {
     display: inline-block; cursor: pointer;
     font: inherit; font-weight: 600; text-decoration: none; text-align: center;
@@ -104,8 +119,28 @@ p { margin: 0 0 1em; }
 
 .inline-form { display: inline-flex; gap: 6px; align-items: center; margin: 2px 4px 2px 0; }
 
-/* ---------- Formulários ---------- */
-.auth-card { max-width: 440px; margin: 16px auto 0; }
+.auth-split {
+    display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+    max-width: 900px; margin: 8px auto 0; padding: 0; overflow: hidden;
+}
+.auth-aside {
+    background: var(--inst); color: var(--inst-text);
+    padding: 40px 32px; display: flex; flex-direction: column; gap: 4px;
+}
+.auth-aside .brand-logo { width: 64px; height: 64px; margin-bottom: 16px; }
+.auth-aside h2 { font-size: 1.55rem; }
+.auth-aside p { opacity: .85; }
+.auth-aside .auth-note {
+    margin-top: auto; padding-top: 16px; font-size: .88rem;
+    border-top: 1px solid color-mix(in srgb, var(--inst-text) 25%, transparent);
+}
+.auth-main { padding: 40px 36px; }
+.auth-switch { margin: 20px 0 0; }
+@media (max-width: 760px) {
+    .auth-split { grid-template-columns: 1fr; }
+    .auth-aside, .auth-main { padding: 24px 20px; }
+    .auth-aside .brand-logo { width: 48px; height: 48px; margin-bottom: 8px; }
+}
 .form { display: flex; flex-direction: column; gap: 6px; }
 .form label { font-weight: 600; margin-top: 10px; }
 .form .btn { margin-top: 18px; }
@@ -121,13 +156,11 @@ input.invalid { border-color: var(--danger); }
 .field-error { color: var(--danger); font-size: .88rem; }
 .hint { color: var(--text-muted); font-size: .85rem; }
 
-/* ---------- Alertas ---------- */
 .alert { border-radius: calc(var(--radius) - 4px); padding: 12px 14px; margin-bottom: 16px; border: 1px solid; }
 .alert p { margin: 0; }
 .alert-success { color: var(--ok); border-color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, var(--surface)); }
 .alert-error { color: var(--danger); border-color: var(--danger); background: color-mix(in srgb, var(--danger) 10%, var(--surface)); }
 
-/* ---------- Badges ---------- */
 .badge {
     display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .02em;
     padding: 2px 9px; border-radius: 999px;
@@ -140,7 +173,6 @@ input.invalid { border-color: var(--danger); }
 .badge-off { color: var(--text-muted); }
 .badge-warn { color: var(--warn); border-color: currentColor; }
 
-/* ---------- Tabelas ---------- */
 .table-wrap { padding: 0; overflow-x: auto; }
 .table { width: 100%; border-collapse: collapse; font-size: .94rem; }
 .table th, .table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
@@ -148,11 +180,15 @@ input.invalid { border-color: var(--danger); }
 .table tr:last-child td { border-bottom: 0; }
 .actions-col { min-width: 260px; }
 
-/* ---------- Detalhes ---------- */
 .details { display: grid; grid-template-columns: max-content 1fr; gap: 8px 18px; margin: 0; }
 .details dt { color: var(--text-muted); }
 .details dd { margin: 0; font-weight: 500; word-break: break-word; }
 
 .status-code { font-family: var(--font-display); font-size: 3.5rem; font-weight: 800; color: var(--primary); margin: 0; }
 
-.site-footer { padding: 24px 16px; text-align: center; font-size: .85rem; color: var(--text-muted); }
+.error-logo { width: 56px; height: 56px; }
+
+.site-footer { border-top: 1px solid var(--border); padding: 20px 0; font-size: .85rem; color: var(--text-muted); }
+.footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 24px; }
+.site-footer p { margin: 0; }
+.site-footer strong { color: var(--text); }

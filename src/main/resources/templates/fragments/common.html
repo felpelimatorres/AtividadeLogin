@@ -1,54 +1,69 @@
 <!DOCTYPE html>
-<!--/*
-  Fragmentos reutilizados por TODOS os temas.
-  Um tema novo pode usar estes fragmentos ou criar os seus próprios.
-*/-->
 <html lang="pt-BR"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 
-<!--/* <head> comum: metadados, CSS base e CSS do tema ativo */-->
 <th:block th:fragment="head">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/svg+xml" th:href="@{/img/brasao.svg}">
     <link rel="stylesheet" th:href="@{/css/base.css}">
     <link rel="stylesheet" th:href="@{${theme.stylesheet}}">
 </th:block>
 
-<!--/* Marca do sistema */-->
 <a th:fragment="brand" class="brand" th:href="@{/}">
-    <span class="brand-mark" aria-hidden="true">◆</span> Login Seguro
+
+    <span class="brand-text">
+        <span class="brand-name">Universidade Vale Sereno</span>
+        <span class="brand-sub">Portal Acadêmico</span>
+    </span>
 </a>
 
-<!--/* Links de navegação, exibidos conforme o perfil do usuário */-->
 <ul th:fragment="nav-links" class="nav-links">
-    <li sec:authorize="isAnonymous()"><a th:href="@{/login}">Entrar</a></li>
-    <li sec:authorize="isAnonymous()"><a class="btn btn-small" th:href="@{/registro}">Criar conta</a></li>
+    <li sec:authorize="isAnonymous()"><a th:href="@{/registro}">Primeiro acesso</a></li>
+    <li sec:authorize="isAnonymous()"><a class="btn btn-small" th:href="@{/login}">Acessar portal</a></li>
 
-    <li sec:authorize="isAuthenticated()"><a th:href="@{/painel}">Painel</a></li>
-    <li sec:authorize="isAuthenticated()"><a th:href="@{/usuario/perfil}">Meu perfil</a></li>
-    <li sec:authorize="hasAnyRole('ADMIN','MODERADOR')"><a th:href="@{/moderador/usuarios}">Moderação</a></li>
+    <li sec:authorize="isAuthenticated()"><a th:href="@{/painel}">Início</a></li>
+    <li sec:authorize="isAuthenticated()"><a th:href="@{/usuario/perfil}">Meus dados</a></li>
+    <li sec:authorize="hasAnyRole('ADMIN','MODERADOR')"><a th:href="@{/moderador/usuarios}">Secretaria</a></li>
     <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/admin/usuarios}">Administração</a></li>
     <li sec:authorize="isAuthenticated()">
-        <!--/* Logout por POST: o Thymeleaf adiciona o token CSRF automaticamente */-->
         <form th:action="@{/logout}" method="post" class="inline-form">
-            <button type="submit" class="btn btn-small btn-ghost">
-                Sair (<span sec:authentication="name">usuario</span>)
-            </button>
+            <button type="submit" class="btn btn-small btn-ghost">Sair</button>
         </form>
     </li>
 </ul>
 
-<!--/* Mensagens de sucesso/erro enviadas via flash attributes */-->
 <th:block th:fragment="alerts">
     <div th:if="${sucesso}" class="alert alert-success" role="status" th:text="${sucesso}">Sucesso</div>
     <div th:if="${erro}" class="alert alert-error" role="alert" th:text="${erro}">Erro</div>
 </th:block>
 
+<section th:fragment="notices" class="card notices" aria-labelledby="avisos-titulo">
+    <h2 id="avisos-titulo">Avisos da secretaria</h2>
+    <ul class="notice-list">
+        <li>
+            <time datetime="2026-11-16">16 a 27 de novembro</time>
+            Rematrícula para o semestre 2027.1 pelo portal.
+        </li>
+        <li>
+            <time datetime="2026-11-30">A partir de 30 de novembro</time>
+            Biblioteca Central em horário estendido durante as avaliações finais.
+        </li>
+        <li>
+            <time datetime="2026-12-11">Até 11 de dezembro</time>
+            Inscrições para a colação de grau na secretaria acadêmica.
+        </li>
+    </ul>
+</section>
+
 <footer th:fragment="footer" class="site-footer">
-    <p>Login Seguro · Spring Boot, Spring Security, Thymeleaf e MongoDB Atlas ·
-        tema <strong th:text="${theme.name}">padrao</strong></p>
+    <div class="container footer-inner">
+        <p><strong>Universidade Vale Sereno</strong> · Portal Acadêmico</p>
+        <p>Secretaria acadêmica: segunda a sexta, das 8h às 20h</p>
+        <p>© 2026 · Instituição fictícia</p>
+    </div>
 </footer>
 
 </body>

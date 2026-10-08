@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.umc.loginseguro.user.service.UserService;
 
-/** Área do MODERADOR: vê todos os usuários e ativa/desativa/desbloqueia contas comuns. */
 @Controller
 @RequestMapping("/moderador")
 public class ModeratorController extends UserManagementController {

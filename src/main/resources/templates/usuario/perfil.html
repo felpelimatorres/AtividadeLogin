@@ -4,35 +4,36 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{__${theme.layout}__}">
 <head>
-    <title>Meu perfil</title>
+    <title>Meus dados</title>
 </head>
 <body>
 <section layout:fragment="content">
-    <h1>Meu perfil</h1>
+    <h1>Meus dados</h1>
 
     <div class="grid two">
         <article class="card">
-            <h2>Dados da conta</h2>
+            <h2>Cadastro</h2>
             <dl class="details">
                 <dt>Nome</dt><dd th:text="${user.name}">Nome</dd>
-                <dt>Usuário</dt><dd th:text="${user.username}">usuario</dd>
+                <dt>Login</dt><dd th:text="${user.username}">usuario</dd>
                 <dt>E-mail</dt><dd th:text="${user.email}">email</dd>
-                <dt>Perfil</dt><dd th:text="${user.role.label}">Usuário</dd>
-                <dt>Cadastro</dt><dd th:text="${user.createdAtText}">—</dd>
+                <dt>Vínculo</dt><dd th:text="${user.role.label}">Estudante</dd>
+                <dt>Cadastrado em</dt><dd th:text="${user.createdAtText}">—</dd>
                 <dt>Último acesso</dt><dd th:text="${user.lastLoginAtText}">—</dd>
             </dl>
         </article>
 
         <article class="card">
-            <h2>Tema visual</h2>
-            <p class="muted">O tema muda layout e cores sem alterar nenhuma regra do sistema.</p>
+            <h2>Aparência</h2>
+            <p class="muted">Escolha como o portal é exibido para você.</p>
             <form th:action="@{/usuario/tema}" method="post" class="form">
                 <label for="theme">Tema</label>
                 <select id="theme" name="theme">
-                    <option th:each="t : ${themes}" th:value="${t}" th:text="${t}"
-                            th:selected="${t == theme.name}">padrao</option>
+                    <option th:each="t : ${themes}" th:value="${t}"
+                            th:text="${t == 'padrao' ? 'Claro, com menu superior' : (t == 'escuro' ? 'Escuro, com menu lateral' : t)}"
+                            th:selected="${t == theme.name}">Claro</option>
                 </select>
-                <button type="submit" class="btn">Aplicar tema</button>
+                <button type="submit" class="btn">Aplicar</button>
             </form>
         </article>
 

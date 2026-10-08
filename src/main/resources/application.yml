@@ -1,22 +1,14 @@
-# =====================================================================
-#  Login Seguro - configuração principal
-#  Nenhum segredo fica neste arquivo: tudo vem de variáveis de ambiente
-#  ou do arquivo .env (ignorado pelo Git). Veja .env.example e o README.
-# =====================================================================
 spring:
   application:
     name: login-seguro
 
-  # Lê o arquivo .env da raiz do projeto, se existir (formato chave=valor)
   config:
     import: optional:file:.env[.properties]
 
   data:
     mongodb:
-      # String de conexão do MongoDB Atlas (mongodb+srv:// já usa TLS por padrão)
       uri: ${MONGODB_URI}
       database: ${MONGODB_DATABASE:login_seguro}
-      # Cria os índices únicos de username/e-mail declarados com @Indexed
       auto-index-creation: true
 
   thymeleaf:
@@ -31,8 +23,6 @@ server:
       enabled: false
 
 app:
-  # Temas visuais: cada tema tem um layout em templates/themes/<nome>/layout.html
-  # e uma folha de estilo em static/themes/<nome>/theme.css
   theme:
     default-theme: ${APP_DEFAULT_THEME:padrao}
     available:
@@ -40,17 +30,12 @@ app:
       - escuro
 
   security:
-    # Bloqueio temporário após tentativas de login malsucedidas
     max-failed-attempts: 5
     lock-duration: 15m
 
   session:
-    # Sessões ficam no MongoDB e expiram após 30 min de inatividade (SessionConfig)
-    # Em produção (HTTPS) defina COOKIE_SECURE=true
     cookie-secure: ${COOKIE_SECURE:false}
 
-  # Administrador inicial, criado só se ainda não existir nenhum ADMIN.
-  # Deixe em branco para não criar.
   bootstrap-admin:
     username: ${ADMIN_USERNAME:}
     email: ${ADMIN_EMAIL:}

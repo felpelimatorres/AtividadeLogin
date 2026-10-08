@@ -16,6 +16,5 @@ jobs:
           distribution: temurin
           java-version: "21"
           cache: maven
-      # Os testes não precisam do Atlas: usam mocks e MockMvc
       - name: Build e testes
         run: mvn -B verify

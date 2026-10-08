@@ -10,10 +10,6 @@ import org.springframework.stereotype.Service;
 
 import br.edu.umc.loginseguro.user.repository.UserRepository;
 
-/**
- * Ponte entre o Spring Security e a coleção de usuários no MongoDB.
- * Aceita nome de usuário ou e-mail no campo de login.
- */
 @Service
 public class MongoUserDetailsService implements UserDetailsService {
 

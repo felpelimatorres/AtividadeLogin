@@ -4,39 +4,47 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{__${theme.layout}__}">
 <head>
-    <title>Entrar</title>
+    <title>Acessar portal</title>
 </head>
 <body>
 <section layout:fragment="content">
-    <div class="auth-card card">
-        <h1>Entrar</h1>
+    <div class="auth-split card">
+        <aside class="auth-aside">
+            <img class="brand-logo" th:src="@{/img/brasao.svg}" alt="">
+            <h2>Bem-vindo ao Portal Acadêmico</h2>
+            <p>Entre com o login ou o e-mail cadastrado no seu primeiro acesso.</p>
+            <p class="auth-note">Esqueceu a senha? Procure a secretaria acadêmica com um documento de identificação.</p>
+        </aside>
 
-        <div th:if="${param.erro}" class="alert alert-error" role="alert">Usuário ou senha inválidos.</div>
-        <div th:if="${param.bloqueado}" class="alert alert-error" role="alert">
-            Conta bloqueada temporariamente por excesso de tentativas. Tente novamente mais tarde.
+        <div class="auth-main">
+            <h1>Acessar portal</h1>
+
+            <div th:if="${param.erro}" class="alert alert-error" role="alert">Login ou senha incorretos.</div>
+            <div th:if="${param.bloqueado}" class="alert alert-error" role="alert">
+                Acesso suspenso temporariamente por excesso de tentativas. Tente novamente em alguns minutos.
+            </div>
+            <div th:if="${param.desativado}" class="alert alert-error" role="alert">
+                Este cadastro está inativo. Entre em contato com a secretaria acadêmica.
+            </div>
+            <div th:if="${param.logout}" class="alert alert-success" role="status">Você saiu do portal.</div>
+            <div th:if="${param.registrado}" class="alert alert-success" role="status">
+                Cadastro concluído. Entre com seus dados para continuar.
+            </div>
+
+            <form th:action="@{/login}" method="post" class="form" autocomplete="on">
+                <label for="username">Login ou e-mail</label>
+                <input id="username" name="username" type="text" required autofocus
+                       autocomplete="username" maxlength="120">
+
+                <label for="password">Senha</label>
+                <input id="password" name="password" type="password" required
+                       autocomplete="current-password" maxlength="64">
+
+                <button type="submit" class="btn btn-block">Entrar</button>
+            </form>
+
+            <p class="muted auth-switch">Primeiro acesso? <a th:href="@{/registro}">Crie seu cadastro</a></p>
         </div>
-        <div th:if="${param.desativado}" class="alert alert-error" role="alert">
-            Esta conta está desativada. Procure um administrador.
-        </div>
-        <div th:if="${param.logout}" class="alert alert-success" role="status">Você saiu do sistema.</div>
-        <div th:if="${param.registrado}" class="alert alert-success" role="status">
-            Cadastro realizado! Faça login para continuar.
-        </div>
-
-        <!--/* Processado pelo Spring Security (UsernamePasswordAuthenticationFilter) */-->
-        <form th:action="@{/login}" method="post" class="form" autocomplete="on">
-            <label for="username">Usuário ou e-mail</label>
-            <input id="username" name="username" type="text" required autofocus
-                   autocomplete="username" maxlength="120">
-
-            <label for="password">Senha</label>
-            <input id="password" name="password" type="password" required
-                   autocomplete="current-password" maxlength="64">
-
-            <button type="submit" class="btn btn-block">Entrar</button>
-        </form>
-
-        <p class="muted">Ainda não tem conta? <a th:href="@{/registro}">Cadastre-se</a></p>
     </div>
 </section>
 </body>

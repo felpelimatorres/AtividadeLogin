@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 import br.edu.umc.loginseguro.user.domain.Role;
 
-/** Utilitário para extrair o perfil do usuário autenticado. */
 public final class CurrentUser {
 
     private CurrentUser() {

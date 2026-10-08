@@ -22,14 +22,12 @@ public class HomeController {
         return "index";
     }
 
-    /** Painel inicial após o login; o conteúdo exibido muda conforme o perfil. */
     @GetMapping("/painel")
     public String dashboard(Authentication authentication, Model model) {
         model.addAttribute("user", userService.findView(authentication.getName()));
         return "painel";
     }
 
-    /** Página exibida quando o usuário tenta acessar uma área sem permissão (HTTP 403). */
     @RequestMapping("/acesso-negado")
     public String accessDenied() {
         return "acesso-negado";

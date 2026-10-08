@@ -19,7 +19,6 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     long countByRole(Role role);
 
-    /** Permite login informando o nome de usuário ou o e-mail. */
     default Optional<User> findByLogin(String login) {
         if (login == null) {
             return Optional.empty();
